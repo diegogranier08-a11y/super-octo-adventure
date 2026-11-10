@@ -1,0 +1,2430 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Diário de Sobrevivente — 2007</title>
+  <style>
+    :root {
+      --bg-dark: #1a1a16;
+      --bg-paper: #2a2a22;
+      --bg-card: #25251e;
+      --green-mil: #4a5c2e;
+      --green-dark: #2f3a1c;
+      --green-light: #6b7f3f;
+      --brown: #5c4033;
+      --brown-light: #7a5c45;
+      --gray: #4a4a42;
+      --text: #e8e4d4;
+      --text-muted: #b0aa98;
+      --accent: #a8bc5c;
+      --danger: #8b3a3a;
+      --border: #3d3d32;
+      --shadow: rgba(0,0,0,0.55);
+      --font-diary: Georgia, "Times New Roman", serif;
+      --font-mono: "Courier New", Courier, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      background: var(--bg-dark);
+      color: var(--text);
+      font-family: var(--font-diary);
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: #12110e;
+      background-image:
+        /* manchas e sujeira */
+        radial-gradient(ellipse 120% 80% at 10% 15%, rgba(60,45,25,0.35) 0%, transparent 55%),
+        radial-gradient(ellipse 90% 70% at 90% 85%, rgba(40,30,18,0.4) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 50% at 70% 20%, rgba(55,48,28,0.2) 0%, transparent 45%),
+        radial-gradient(ellipse 40% 35% at 25% 70%, rgba(30,35,20,0.25) 0%, transparent 50%),
+        /* vinheta escura nas bordas */
+        radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(0,0,0,0.55) 100%),
+        /* grão / ruído simulado */
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 1px,
+          rgba(0,0,0,0.04) 1px,
+          rgba(0,0,0,0.04) 2px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 2px,
+          rgba(255,220,150,0.015) 2px,
+          rgba(255,220,150,0.015) 3px
+        ),
+        linear-gradient(165deg, #1c1a14 0%, #14120e 40%, #10100c 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.18;
+      background-image:
+        radial-gradient(circle at 18% 42%, rgba(90,70,40,0.5) 0%, transparent 8%),
+        radial-gradient(circle at 72% 28%, rgba(50,40,25,0.45) 0%, transparent 6%),
+        radial-gradient(circle at 40% 78%, rgba(70,55,30,0.35) 0%, transparent 10%),
+        radial-gradient(circle at 85% 65%, rgba(40,35,20,0.4) 0%, transparent 7%),
+        radial-gradient(circle at 55% 12%, rgba(80,60,35,0.25) 0%, transparent 5%);
+      mix-blend-mode: multiply;
+    }
+
+    body > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background:
+        linear-gradient(180deg, rgba(28,26,20,0.97) 0%, rgba(20,18,14,0.98) 100%);
+      border-bottom: 2px solid #2a321c;
+      padding: 0.5rem 0.85rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.45rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+    }
+
+    .header-title {
+      font-size: 1.05rem;
+      font-weight: bold;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      text-transform: uppercase;
+      flex: 1 1 auto;
+      min-width: 120px;
+    }
+    .header-title span {
+      display: block;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      font-weight: normal;
+      letter-spacing: 0.08em;
+      margin-top: 1px;
+    }
+
+    .btn-group { display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: center; }
+
+    button {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      padding: 0.32rem 0.55rem;
+      border: 1px solid var(--green-mil);
+      background: var(--green-dark);
+      color: var(--text);
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.15s, border-color 0.15s, transform 0.1s;
+      white-space: nowrap;
+      letter-spacing: 0.03em;
+    }
+    button:hover { background: var(--green-mil); border-color: var(--green-light); }
+    button:active { transform: scale(0.97); }
+    button.danger { border-color: var(--danger); background: #3a1f1f; }
+    button.danger:hover { background: var(--danger); }
+
+    button.notes-btn {
+      font-size: 0.72rem;
+      padding: 0.32rem 0.6rem;
+      background: var(--brown);
+      border-color: var(--brown-light);
+    }
+    button.notes-btn:hover { background: var(--brown-light); }
+    button.notes-btn.active {
+      background: var(--green-mil);
+      border-color: var(--accent);
+      box-shadow: 0 0 8px rgba(139,154,74,0.4);
+    }
+
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0.8rem 0.7rem 3rem;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid #3a3830;
+      border-radius: 2px;
+      padding: 0.8rem 0.9rem;
+      box-shadow:
+        0 2px 10px rgba(0,0,0,0.55),
+        inset 0 0 40px rgba(0,0,0,0.15);
+      position: relative;
+      background-image:
+        radial-gradient(ellipse at 5% 0%, rgba(70,55,30,0.2) 0%, transparent 40%),
+        radial-gradient(ellipse at 95% 100%, rgba(40,35,22,0.25) 0%, transparent 45%),
+        linear-gradient(180deg, rgba(48,46,38,0.98) 0%, rgba(38,36,28,0.98) 100%),
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px);
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #2a2418, var(--brown), #2f3a1c, var(--brown), #2a2418);
+      opacity: 0.75;
+    }
+    .card::after {
+      content: "";
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      border-radius: 2px;
+      box-shadow: inset 0 0 0 1px rgba(255,230,180,0.03);
+      background:
+        radial-gradient(ellipse at 12% 88%, rgba(0,0,0,0.12) 0%, transparent 35%),
+        radial-gradient(ellipse at 88% 8%, rgba(90,70,40,0.08) 0%, transparent 30%);
+    }
+
+    .card-title {
+      font-size: 0.85rem;
+      font-weight: bold;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 0.6rem;
+      padding-bottom: 0.28rem;
+      border-bottom: 1px dashed var(--gray);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+    }
+    .card-title .hint {
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      font-weight: normal;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    label {
+      display: block;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-bottom: 0.15rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      background: var(--bg-paper);
+      border: 1px solid var(--border);
+      color: #f0ecd8;
+      font-family: var(--font-diary);
+      font-size: 0.95rem;
+      padding: 0.35rem 0.45rem;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    input[type="number"] {
+      font-family: var(--font-mono);
+      text-align: center;
+    }
+    input:focus, textarea:focus {
+      border-color: var(--green-light);
+      box-shadow: 0 0 0 2px rgba(74,92,46,0.25);
+    }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; }
+    .grid-nivel-xp {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.55rem;
+    }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.55rem; }
+    .field { margin-bottom: 0.5rem; }
+    .field:last-child { margin-bottom: 0; }
+
+    .combat-row {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.45rem;
+      margin-bottom: 0.55rem;
+    }
+    .combat-row-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .combat-row-5 {
+      grid-template-columns: repeat(5, 1fr);
+    }
+    .combat-box {
+      background: var(--bg-paper);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 0.35rem 0.25rem;
+      text-align: center;
+    }
+    .combat-box label { margin-bottom: 0.1rem; font-size: 0.58rem; }
+    .combat-box input {
+      border: none;
+      background: transparent;
+      padding: 0.15rem;
+      font-size: 1.15rem;
+      font-weight: bold;
+      color: #f0ecd8;
+    }
+    .combat-box input:focus { box-shadow: none; background: rgba(74,92,46,0.12); }
+
+    /* Retrato do personagem */
+    .portrait-wrap {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      margin-bottom: 0.7rem;
+    }
+    .portrait-slot {
+      flex-shrink: 0;
+      width: 96px;
+      height: 96px;
+      border: 2px solid var(--brown);
+      border-radius: 4px;
+      background:
+        radial-gradient(ellipse at 40% 30%, rgba(90,70,40,0.25) 0%, transparent 60%),
+        var(--bg-paper);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      box-shadow: inset 0 0 12px rgba(0,0,0,0.35);
+    }
+    .portrait-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .portrait-slot .placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.6rem;
+      text-align: center;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+    .portrait-slot .placeholder span {
+      font-size: 1.6rem;
+      margin-bottom: 0.15rem;
+      opacity: 0.7;
+    }
+    .portrait-slot.has-img .placeholder { display: none; }
+    .portrait-fields {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .portrait-slot .remove-img {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 22px;
+      height: 22px;
+      background: rgba(50,20,20,0.85);
+      border: 1px solid var(--danger);
+      color: #e8a0a0;
+      font-size: 0.85rem;
+      line-height: 1;
+      border-radius: 2px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      z-index: 2;
+    }
+    .portrait-slot.has-img:hover .remove-img,
+    .portrait-slot.has-img:focus-within .remove-img { display: flex; }
+
+    .hp-bar-wrap { margin-top: 0.35rem; }
+    .hp-bar {
+      height: 8px;
+      background: #2a1a1a;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .hp-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #5a2a2a, #8b3a3a);
+      transition: width 0.3s;
+    }
+
+    .resource-wrap {
+      margin-top: 0.65rem;
+    }
+    .resource-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.3rem;
+    }
+    .resource-header label {
+      margin: 0;
+      font-size: 0.65rem;
+    }
+    .resource-header input {
+      width: 64px;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: bold;
+      padding: 0.2rem 0.3rem;
+    }
+    .resource-bar {
+      height: 12px;
+      background: #1a1814;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .resource-fill {
+      height: 100%;
+      transition: width 0.12s ease, background 0.35s, opacity 0.35s;
+      border-radius: 2px;
+      pointer-events: none;
+    }
+    /* Sanidade — vermelho */
+    .resource-fill.sanidade {
+      background: linear-gradient(90deg, #5a1a1a, #8b2a2a, #c04040);
+    }
+    .resource-fill.sanidade.low {
+      background: linear-gradient(90deg, #4a1515, #7a2525, #a83838);
+    }
+    .resource-fill.sanidade.critical {
+      background: linear-gradient(90deg, #3a1010, #6a1a1a, #8b2828);
+    }
+    /* Estamina — azul → branco quando acaba */
+    .resource-fill.estamina {
+      background: linear-gradient(90deg, #1a2a4a, #2a4a7a, #4a7aba);
+    }
+    .resource-fill.estamina.low {
+      background: linear-gradient(90deg, #2a3a5a, #5a6a8a, #9aabc0);
+    }
+    .resource-fill.estamina.critical {
+      background: linear-gradient(90deg, #4a4a50, #8a8a90, #e0e0e4);
+    }
+    .resource-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.58rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      margin-top: 0.15rem;
+      letter-spacing: 0.04em;
+    }
+
+    .attrs-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.4rem;
+    }
+    @media (min-width: 520px) {
+      .attrs-grid {
+        grid-template-columns: repeat(7, 1fr);
+      }
+    }
+    .attr-box {
+      background: var(--bg-paper);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0.4rem 0.25rem 0.35rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.15rem;
+    }
+    .attr-box .attr-name {
+      font-size: 0.58rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      min-height: 1.4em;
+    }
+    .attr-box input {
+      width: 100%;
+      max-width: 52px;
+      font-size: 1.25rem;
+      font-weight: bold;
+      padding: 0.2rem 0.1rem;
+      color: #f0ecd8;
+    }
+    .attr-box .mod {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      color: var(--accent);
+      font-weight: bold;
+      min-height: 1.3em;
+    }
+    .attr-box .mod.neg { color: #c07070; }
+
+    .mod-formula {
+      margin-top: 0.45rem;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-align: center;
+      font-family: var(--font-mono);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.2rem 1rem;
+    }
+    .skill-row {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.95rem;
+      padding: 0.22rem 0;
+      border-bottom: 1px solid rgba(61,61,50,0.4);
+    }
+    .skill-row .mod-val {
+      font-family: var(--font-mono);
+      font-size: 1.05rem;
+      font-weight: bold;
+      color: var(--accent);
+      min-width: 36px;
+      text-align: right;
+    }
+    .skill-row .mod-val.neg { color: #c07070; }
+    .skill-row .name { flex: 1; color: var(--text); }
+    .skill-row .attr-tag {
+      font-size: 0.58rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      min-width: 28px;
+      text-align: right;
+    }
+
+    .list-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 0.45rem;
+    }
+    .list-item {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: var(--bg-paper);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 0.3rem 0.4rem;
+    }
+    .list-item input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 0.1rem 0.15rem;
+      font-size: 0.85rem;
+    }
+    .list-item input:focus {
+      box-shadow: none;
+      background: rgba(74,92,46,0.12);
+    }
+    .list-item .remove-btn {
+      flex-shrink: 0;
+      background: transparent;
+      border: none;
+      color: var(--danger);
+      font-size: 1rem;
+      padding: 0 0.15rem;
+      cursor: pointer;
+      line-height: 1;
+      opacity: 0.7;
+    }
+    .list-item .remove-btn:hover { opacity: 1; }
+
+    .add-btn {
+      width: 100%;
+      background: transparent;
+      border: 1px dashed var(--gray);
+      color: var(--text-muted);
+      padding: 0.3rem;
+      font-size: 0.75rem;
+    }
+    .add-btn:hover {
+      border-color: var(--green-light);
+      color: var(--accent);
+      background: rgba(74,92,46,0.1);
+    }
+
+    /* ===== PAINEL DE NOTAS ===== */
+    .notes-panel {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: #1e1812;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .notes-panel.open { transform: translateX(0); }
+
+    .notes-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 0.85rem;
+      background: linear-gradient(180deg, #3a2e24 0%, #2c241c 100%);
+      border-bottom: 2px solid var(--brown);
+      flex-shrink: 0;
+    }
+    .notes-header .icon-btn {
+      font-size: 1.2rem;
+      padding: 0.4rem 0.65rem;
+      background: transparent;
+      border: 1px solid var(--brown-light);
+      color: #c9a87c;
+      line-height: 1;
+      cursor: pointer;
+      min-width: 44px;
+      min-height: 44px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .notes-header .icon-btn:hover {
+      background: var(--brown);
+      border-color: #c9a87c;
+    }
+    .notes-header h2 {
+      font-size: 0.9rem;
+      color: #c9a87c;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .notes-header .title-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      border-bottom: 1px dashed #5c4a3a;
+      color: #c9a87c;
+      font-size: 0.9rem;
+      font-weight: bold;
+      padding: 0.2rem 0.3rem;
+      border-radius: 0;
+    }
+    .notes-header .title-input:focus {
+      box-shadow: none;
+      border-color: #c9a87c;
+      background: rgba(92,64,51,0.2);
+    }
+
+    /* Tela 1: LISTA de títulos */
+    .view-list {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .view-list.hidden { display: none; }
+
+    .list-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.5rem 0;
+    }
+
+    .note-entry {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 1rem;
+      min-height: 52px;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(74,60,48,0.45);
+      transition: background 0.15s;
+      -webkit-tap-highlight-color: rgba(92,64,51,0.35);
+    }
+    .note-entry:hover { background: rgba(92,64,51,0.3); }
+    .note-entry .entry-title {
+      flex: 1;
+      font-size: 0.95rem;
+      color: #e0d4c0;
+    }
+    .note-entry .entry-title.empty {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+    .note-entry .entry-arrow {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    .note-entry .del-note {
+      flex-shrink: 0;
+      background: transparent;
+      border: none;
+      color: var(--danger);
+      font-size: 1rem;
+      opacity: 0.55;
+      cursor: pointer;
+      padding: 0 0.25rem;
+      line-height: 1;
+    }
+    .note-entry .del-note:hover { opacity: 1; }
+
+    .list-footer {
+      padding: 0.7rem 1rem;
+      border-top: 1px solid #3a2e24;
+      flex-shrink: 0;
+    }
+    .list-footer button {
+      width: 100%;
+      background: var(--brown);
+      border-color: var(--brown-light);
+      color: #e0d4c0;
+      padding: 0.7rem;
+      font-size: 0.85rem;
+      min-height: 48px;
+    }
+    .list-footer button:hover { background: var(--brown-light); }
+
+    /* Tela 2: BLOCO de texto da anotação */
+    .view-editor {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .view-editor.hidden { display: none; }
+
+    .editor-body {
+      flex: 1;
+      padding: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .editor-body textarea {
+      flex: 1;
+      width: 100%;
+      min-height: 0;
+      background: #16120e;
+      border: 1px solid #4a3c30;
+      color: #e0d4c0;
+      font-family: var(--font-diary);
+      font-size: 1rem;
+      line-height: 1.6;
+      padding: 1rem;
+      resize: none;
+      border-radius: 2px;
+    }
+    .editor-body textarea:focus {
+      border-color: var(--brown-light);
+      box-shadow: 0 0 0 2px rgba(92,64,51,0.3);
+    }
+
+    .notes-footer {
+      padding: 0.45rem 0.85rem;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      border-top: 1px solid #3a2e24;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+
+    .editor-toolbar {
+      display: flex;
+      gap: 0.35rem;
+      padding: 0 0.85rem 0.4rem;
+      flex-shrink: 0;
+    }
+    .editor-toolbar button {
+      font-size: 0.7rem;
+      padding: 0.35rem 0.55rem;
+      min-height: 36px;
+      background: #2c241c;
+      border-color: #5c4a3a;
+      color: #c9a87c;
+    }
+    .editor-toolbar button.active {
+      background: var(--brown);
+      border-color: #c9a87c;
+      color: #f0e0c8;
+    }
+    .md-preview {
+      flex: 1;
+      width: 100%;
+      min-height: 0;
+      overflow-y: auto;
+      background: #16120e;
+      border: 1px solid #4a3c30;
+      color: #e8e0d0;
+      font-family: var(--font-diary);
+      font-size: 1rem;
+      line-height: 1.65;
+      padding: 1rem;
+      border-radius: 2px;
+    }
+    .md-preview.hidden, #noteText.hidden { display: none; }
+    .md-preview h1 {
+      font-size: 1.45rem;
+      color: #c9a87c;
+      margin: 0.6rem 0 0.4rem;
+      border-bottom: 1px solid #4a3c30;
+      padding-bottom: 0.25rem;
+    }
+    .md-preview h2 {
+      font-size: 1.25rem;
+      color: #c9a87c;
+      margin: 0.55rem 0 0.35rem;
+    }
+    .md-preview h3 {
+      font-size: 1.1rem;
+      color: #b8a070;
+      margin: 0.5rem 0 0.3rem;
+    }
+    .md-preview p { margin: 0.4rem 0; }
+    .md-preview strong { color: #f0ecd8; font-weight: bold; }
+    .md-preview em { color: #d4c8b0; font-style: italic; }
+    .md-preview code {
+      font-family: var(--font-mono);
+      background: #2a2218;
+      padding: 0.1rem 0.35rem;
+      border-radius: 2px;
+      font-size: 0.88em;
+      color: #b8d48a;
+    }
+    .md-preview pre {
+      background: #2a2218;
+      padding: 0.65rem 0.75rem;
+      border-radius: 2px;
+      overflow-x: auto;
+      margin: 0.5rem 0;
+    }
+    .md-preview pre code { background: none; padding: 0; }
+    .md-preview ul, .md-preview ol {
+      margin: 0.4rem 0 0.4rem 1.3rem;
+    }
+    .md-preview li { margin: 0.2rem 0; }
+    .md-preview blockquote {
+      border-left: 3px solid var(--brown);
+      padding-left: 0.75rem;
+      margin: 0.5rem 0;
+      color: #c0b4a0;
+    }
+    .md-preview hr {
+      border: none;
+      border-top: 1px solid #4a3c30;
+      margin: 0.8rem 0;
+    }
+    .md-preview a { color: var(--accent); }
+
+
+    /* ===== DADOS 3D ===== */
+    .fab-dice {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 150;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 2px solid var(--green-light);
+      background: linear-gradient(145deg, #4a5c2e, #2f3a1c);
+      color: #e8e4d4;
+      font-size: 1.45rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5), 0 0 0 1px rgba(139,154,74,0.25);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s, box-shadow 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .fab-dice:hover {
+      transform: scale(1.06);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.55), 0 0 12px rgba(139,154,74,0.35);
+    }
+    .fab-dice:active { transform: scale(0.96); }
+    .fab-dice.hidden { display: none; }
+
+    .dice-panel {
+      position: fixed;
+      inset: 0;
+      z-index: 320;
+      background: #141410;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .dice-panel.open { transform: translateY(0); }
+
+    .dice-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 0.85rem;
+      background: linear-gradient(180deg, #2a3220 0%, #1e2418 100%);
+      border-bottom: 2px solid var(--green-dark);
+      flex-shrink: 0;
+    }
+    .dice-header .icon-btn {
+      font-size: 1.2rem;
+      padding: 0.4rem 0.65rem;
+      min-width: 44px;
+      min-height: 44px;
+      background: transparent;
+      border: 1px solid var(--green-mil);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .dice-header h2 {
+      font-size: 0.95rem;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      flex: 1;
+    }
+
+    .dice-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 0.85rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .dice-stage {
+      perspective: 600px;
+      width: 100%;
+      max-width: 280px;
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0.5rem 0;
+    }
+
+    .dice-3d {
+      width: 88px;
+      height: 88px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.1s;
+    }
+    .dice-3d.rolling {
+      animation: diceSpin 0.9s cubic-bezier(0.2, 0.8, 0.3, 1);
+    }
+    @keyframes diceSpin {
+      0% { transform: rotateX(0) rotateY(0) rotateZ(0) scale(1); }
+      30% { transform: rotateX(280deg) rotateY(160deg) rotateZ(40deg) scale(1.1); }
+      60% { transform: rotateX(520deg) rotateY(400deg) rotateZ(100deg) scale(0.95); }
+      100% { transform: rotateX(720deg) rotateY(720deg) rotateZ(0) scale(1); }
+    }
+
+    .dice-face-result {
+      width: 88px;
+      height: 88px;
+      background: linear-gradient(145deg, #3d4a28, #2a3320);
+      border: 2px solid var(--green-light);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 2.4rem;
+      font-weight: bold;
+      color: #f0ecd8;
+      box-shadow:
+        inset 0 2px 6px rgba(255,255,255,0.08),
+        0 8px 24px rgba(0,0,0,0.45),
+        0 0 0 1px rgba(0,0,0,0.3);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+      transform: rotateX(12deg) rotateY(-8deg);
+    }
+    .dice-face-result.crit {
+      border-color: #c9a87c;
+      color: #ffe9a8;
+      box-shadow: 0 0 20px rgba(201,168,124,0.4), 0 8px 24px rgba(0,0,0,0.45);
+    }
+    .dice-face-result.fumble {
+      border-color: #8b3a3a;
+      color: #e8a0a0;
+    }
+
+    .dice-result-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: -0.3rem;
+    }
+    .dice-result-total {
+      font-family: var(--font-mono);
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: var(--accent);
+      min-height: 1.8em;
+    }
+
+    .dice-types {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.45rem;
+      width: 100%;
+      max-width: 340px;
+    }
+    .dice-type-btn {
+      padding: 0.65rem 0.3rem;
+      min-height: 48px;
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: bold;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: #e8e4d4;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .dice-type-btn:hover, .dice-type-btn.selected {
+      background: var(--green-dark);
+      border-color: var(--green-light);
+      color: var(--accent);
+    }
+    .dice-type-btn.selected {
+      box-shadow: 0 0 0 2px rgba(139,154,74,0.35);
+    }
+
+    .dice-qty {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      width: 100%;
+      max-width: 340px;
+      justify-content: center;
+    }
+    .dice-qty label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    .dice-qty button {
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 4px;
+    }
+    .dice-qty .qty-val {
+      font-family: var(--font-mono);
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #f0ecd8;
+      min-width: 36px;
+      text-align: center;
+    }
+
+    .dice-mod-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      width: 100%;
+      max-width: 340px;
+      justify-content: center;
+    }
+    .dice-mod-row label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    .dice-mod-row input {
+      width: 72px;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 1.05rem;
+      font-weight: bold;
+      color: #f0ecd8;
+    }
+
+    .btn-roll {
+      width: 100%;
+      max-width: 340px;
+      padding: 0.85rem;
+      min-height: 52px;
+      font-size: 1rem;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #5a6e38, #3d4a28);
+      border: 1px solid var(--green-light);
+      color: #f0ecd8;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+    }
+    .btn-roll:hover {
+      background: linear-gradient(180deg, #6b7f3f, #4a5c2e);
+    }
+    .btn-roll:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    .dice-history {
+      width: 100%;
+      max-width: 340px;
+      margin-top: 0.3rem;
+    }
+    .dice-history h3 {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.4rem;
+    }
+    .hist-item {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: #c8c4b4;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid rgba(61,61,50,0.5);
+    }
+    .hist-item .hist-total {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    @media (max-width: 400px) {
+      .dice-types { grid-template-columns: repeat(4, 1fr); gap: 0.35rem; }
+      .dice-type-btn { font-size: 0.85rem; padding: 0.55rem 0.2rem; }
+    }
+
+
+    .dice-formula {
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: #c9a87c;
+      text-align: center;
+      min-height: 1.4em;
+      letter-spacing: 0.02em;
+      white-space: normal;
+      word-break: break-word;
+      max-width: 100%;
+      padding: 0 0.4rem;
+      line-height: 1.35;
+    }
+    .check-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.45rem;
+      width: 100%;
+      max-width: 340px;
+    }
+    .check-btn {
+      padding: 0.65rem 0.5rem;
+      min-height: 48px;
+      font-size: 0.82rem;
+      font-weight: bold;
+      background: var(--bg-card);
+      border: 1px solid var(--brown-light);
+      color: #e0d4c0;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .check-btn:hover, .check-btn.active {
+      background: var(--brown);
+      border-color: #c9a87c;
+      color: #f0e0c8;
+    }
+    .check-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      width: 100%;
+      max-width: 340px;
+      justify-content: center;
+      align-items: center;
+    }
+    .check-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      max-width: 100%;
+      padding: 0.35rem 0.55rem;
+      background: rgba(42, 50, 28, 0.95);
+      border: 1px solid var(--green-mil);
+      border-radius: 4px;
+      font-size: 0.78rem;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-sizing: border-box;
+    }
+    .check-tag button {
+      flex-shrink: 0;
+      background: transparent;
+      border: none;
+      color: #c07070;
+      font-size: 1rem;
+      padding: 0 0.1rem;
+      margin: 0;
+      line-height: 1;
+      cursor: pointer;
+      min-width: 22px;
+      min-height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .picker-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 20;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .picker-overlay.open { display: flex; }
+    .picker-sheet {
+      width: 100%;
+      max-height: 70%;
+      background: #2c241c;
+      border-top: 2px solid var(--brown);
+      border-radius: 12px 12px 0 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .picker-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #4a3c30;
+      color: #c9a87c;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+    .picker-head button {
+      background: transparent;
+      border: none;
+      color: #c9a87c;
+      font-size: 1.3rem;
+      cursor: pointer;
+      padding: 0 0.3rem;
+    }
+    .picker-list {
+      overflow-y: auto;
+      flex: 1;
+      padding: 0.3rem 0 1rem;
+    }
+    .picker-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      min-height: 48px;
+      border-bottom: 1px solid rgba(74,60,48,0.4);
+      cursor: pointer;
+      color: #e0d4c0;
+      font-size: 0.95rem;
+      -webkit-tap-highlight-color: rgba(92,64,51,0.35);
+    }
+    .picker-item:hover { background: rgba(92,64,51,0.3); }
+    .picker-item .pmod {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-weight: bold;
+      font-size: 1.05rem;
+    }
+
+    .save-status {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--green-dark);
+      color: var(--text);
+      font-size: 0.68rem;
+      padding: 0.28rem 0.8rem;
+      border-radius: 3px;
+      border: 1px solid var(--green-mil);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      z-index: 50;
+      font-family: var(--font-mono);
+    }
+    .save-status.show { opacity: 1; }
+
+    @media print {
+      body { background: white; color: #111; }
+      .header, .notes-panel, .save-status, .add-btn, .remove-btn, button {
+        display: none !important;
+      }
+      .container { max-width: 100%; padding: 0; }
+      .card {
+        break-inside: avoid;
+        border: 1px solid #333;
+        box-shadow: none;
+        background: #f8f5e8;
+        color: #222;
+      }
+      .card::before { display: none; }
+      input, textarea {
+        border: none !important;
+        background: transparent !important;
+        color: #111 !important;
+        box-shadow: none !important;
+      }
+      .attr-box, .list-item, .combat-box { border-color: #555; }
+    }
+
+    @media (max-width: 780px) {
+      .attrs-grid { grid-template-columns: repeat(4, 1fr) !important; }
+      .combat-row { grid-template-columns: repeat(3, 1fr); }
+      .combat-row-4 { grid-template-columns: repeat(2, 1fr); }
+      .combat-row-5 { grid-template-columns: repeat(3, 1fr); }
+      .portrait-wrap { flex-direction: column; align-items: center; }
+      .portrait-slot { width: 110px; height: 110px; }
+      .portrait-fields { width: 100%; }
+    }
+    @media (max-width: 640px) {
+      .header { padding: 0.4rem 0.55rem; }
+      .header-title { font-size: 0.9rem; width: 100%; }
+      .btn-group { width: 100%; }
+      button { font-size: 0.62rem; padding: 0.28rem 0.4rem; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .container { padding: 0.55rem 0.45rem 3.5rem; }
+      .card { padding: 0.65rem 0.7rem; }
+      .attrs-grid { grid-template-columns: repeat(3, 1fr) !important; }
+    }
+    @media (max-width: 400px) {
+      .attrs-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .combat-row, .combat-row-4, .combat-row-5 { grid-template-columns: repeat(2, 1fr); }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-title">
+      Diário de Sobrevivente
+      <span>Apocalipse Zumbi — 2007 · D&D 5e</span>
+    </div>
+    <div class="btn-group">
+      <button type="button" class="notes-btn" id="btnNotes" title="Bloco de Notas">📝 Notas</button>
+      <button type="button" id="btnSave" title="Salvar agora">Salvar</button>
+      <button type="button" id="btnExport" title="Exportar JSON">Exportar</button>
+      <button type="button" id="btnImport" title="Importar JSON">Importar</button>
+      <button type="button" id="btnPrint" title="Imprimir / PDF">Imprimir</button>
+      <button type="button" class="danger" id="btnClear" title="Limpar tudo">Limpar</button>
+    </div>
+  </header>
+
+  <main class="container" id="sheet">
+    <section class="card">
+      <div class="card-title">Identidade</div>
+      <div class="portrait-wrap">
+        <div class="portrait-slot" id="portraitSlot" title="Toque para adicionar imagem">
+          <img id="portraitImg" alt="" style="display:none" />
+          <div class="placeholder"><span>📷</span>Foto</div>
+          <button type="button" class="remove-img" id="btnRemoveImg" title="Remover imagem">×</button>
+        </div>
+        <div class="portrait-fields">
+          <div class="field">
+            <label>Nome do personagem</label>
+            <input type="text" id="nome" data-key="nome" placeholder="Nome completo" />
+          </div>
+          <div class="field">
+            <label>Apelido / Códinome</label>
+            <input type="text" id="apelido" data-key="apelido" placeholder="Como te chamam" />
+          </div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label>Classe</label>
+          <input type="text" id="classe" data-key="classe" placeholder="Guerreiro, Ladino..." />
+        </div>
+        <div class="field">
+          <label>Raça</label>
+          <input type="text" id="raca" data-key="raca" placeholder="Humano, Elfo..." />
+        </div>
+      </div>
+      <div class="grid-nivel-xp">
+        <div class="field">
+          <label>Nível</label>
+          <input type="number" id="nivel" data-key="nivel" min="1" max="20" />
+        </div>
+        <div class="field">
+          <label>XP</label>
+          <input type="number" id="xp" data-key="xp" min="0" />
+        </div>
+      </div>
+      <input type="file" id="imgInput" accept="image/*" style="display:none" />
+    </section>
+
+    <section class="card">
+      <div class="card-title">Combate & Status</div>
+      <div class="combat-row combat-row-4">
+        <div class="combat-box">
+          <label>CA</label>
+          <input type="number" id="ca" data-key="ca" min="0" />
+        </div>
+        <div class="combat-box">
+          <label>PV</label>
+          <input type="number" id="pvAtual" data-key="pvAtual" min="0" />
+        </div>
+        <div class="combat-box">
+          <label>Iniciativa</label>
+          <input type="text" id="iniciativa" data-key="iniciativa" placeholder="+0" />
+        </div>
+        <div class="combat-box">
+          <label>Desloc.</label>
+          <input type="text" id="deslocamento" data-key="deslocamento" placeholder="9 m" />
+        </div>
+      </div>
+      <div class="field" style="margin-top:0.55rem">
+        <label>Condição / Estado</label>
+        <input type="text" id="condicao" data-key="condicao" placeholder="Ex: exausto, ferido, bem" />
+      </div>
+      <div class="resource-wrap">
+        <div class="resource-header">
+          <label>Estamina</label>
+          <input type="number" id="estamina" data-key="estamina" min="0" max="100" />
+        </div>
+        <div class="resource-bar" data-resource="estamina">
+          <div class="resource-fill estamina" id="estaminaFill" style="width:100%"></div>
+        </div>
+        <div class="resource-labels">
+          <span>0</span>
+          <span>100</span>
+        </div>
+      </div>
+      <div class="resource-wrap">
+        <div class="resource-header">
+          <label>Sanidade</label>
+          <input type="number" id="sanidade" data-key="sanidade" min="0" max="100" />
+        </div>
+        <div class="resource-bar" data-resource="sanidade">
+          <div class="resource-fill sanidade" id="sanidadeFill" style="width:100%"></div>
+        </div>
+        <div class="resource-labels">
+          <span>0</span>
+          <span>100</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-title">Atributos</div>
+      <div class="attrs-grid" id="attrsGrid"></div>
+      <div class="mod-formula">Modificador = ⌊ ( valor − 10 ) ÷ 2 ⌋</div>
+    </section>
+
+    <section class="card">
+      <div class="card-title">
+        Perícias
+        <span class="hint">Calculadas pelo modificador do atributo</span>
+      </div>
+      <div class="skills-grid" id="skillsGrid"></div>
+    </section>
+
+    <section class="card">
+      <div class="card-title">
+        Ferimentos
+        <span class="hint">Adicionar / remover</span>
+      </div>
+      <div class="list-items" id="ferimentosList"></div>
+      <button type="button" class="add-btn" id="btnAddFerimento">+ Adicionar ferimento</button>
+    </section>
+  </main>
+
+  <!-- PAINEL DE NOTAS -->
+  <div class="notes-panel" id="notesPanel">
+    <!-- Cabeçalho muda conforme a tela -->
+    <div class="notes-header" id="notesHeader">
+      <button type="button" class="icon-btn" id="btnBack" title="Voltar">←</button>
+      <h2 id="headerTitle">Anotações</h2>
+      <input type="text" class="title-input hidden" id="noteTitle" placeholder="Título da anotação" />
+    </div>
+
+    <!-- TELA 1: Lista de títulos -->
+    <div class="view-list" id="viewList">
+      <div class="list-body" id="listBody"></div>
+      <div class="list-footer">
+        <button type="button" id="btnNewNote">+ Nova anotação</button>
+      </div>
+    </div>
+
+    <!-- TELA 2: Bloco de notas (texto + markdown) -->
+    <div class="view-editor hidden" id="viewEditor">
+      <div class="editor-toolbar">
+        <button type="button" id="btnEditMode" class="active">Editar</button>
+        <button type="button" id="btnPreviewMode">Visualizar</button>
+      </div>
+      <div class="editor-body">
+        <textarea id="noteText" placeholder="Escreva aqui...&#10;&#10;**negrito**  *itálico*  `código`&#10;# Título&#10;## Subtítulo&#10;- item de lista&#10;> citação"></textarea>
+        <div class="md-preview hidden" id="mdPreview"></div>
+      </div>
+    </div>
+
+    <div class="notes-footer">Páginas amareladas • Tinta que não seca • 2007</div>
+  </div>
+
+  
+  <!-- BOTÃO FLUTUANTE DADOS -->
+  <button type="button" class="fab-dice" id="fabDice" title="Rolar dados">🎲</button>
+
+  <!-- PAINEL DE DADOS -->
+  <div class="dice-panel" id="dicePanel">
+    <div class="dice-header">
+      <button type="button" class="icon-btn" id="btnBackDice" title="Voltar">←</button>
+      <h2>Dados</h2>
+    </div>
+    <div class="dice-body">
+      <div class="dice-stage">
+        <div class="dice-3d" id="dice3d">
+          <div class="dice-face-result" id="diceFace">—</div>
+        </div>
+      </div>
+      <div class="dice-result-label" id="diceLabel">Escolha um dado</div>
+      <div class="dice-result-total" id="diceTotal"></div>
+      <div class="dice-formula" id="diceFormula">1d20</div>
+
+      <div class="check-btns">
+        <button type="button" class="check-btn" id="btnPickSkill">Com perícia</button>
+        <button type="button" class="check-btn" id="btnPickAttr">Atributo</button>
+      </div>
+      <div class="check-tags" id="checkTags"></div>
+
+      <div class="dice-types" id="diceTypes">
+        <button type="button" class="dice-type-btn" data-sides="4">d4</button>
+        <button type="button" class="dice-type-btn" data-sides="6">d6</button>
+        <button type="button" class="dice-type-btn" data-sides="8">d8</button>
+        <button type="button" class="dice-type-btn" data-sides="10">d10</button>
+        <button type="button" class="dice-type-btn" data-sides="12">d12</button>
+        <button type="button" class="dice-type-btn selected" data-sides="20">d20</button>
+        <button type="button" class="dice-type-btn" data-sides="100">d100</button>
+        <button type="button" class="dice-type-btn" data-sides="2">d2</button>
+      </div>
+
+      <div class="dice-qty">
+        <label>Quantidade</label>
+        <button type="button" id="qtyMinus">−</button>
+        <span class="qty-val" id="qtyVal">1</span>
+        <button type="button" id="qtyPlus">+</button>
+      </div>
+
+      <div class="dice-mod-row">
+        <label>Mod. extra</label>
+        <input type="number" id="diceMod" value="0" step="1" />
+      </div>
+
+      <button type="button" class="btn-roll" id="btnRoll">Rolar</button>
+
+      <div class="dice-history">
+        <h3>Histórico</h3>
+        <div id="diceHist"></div>
+      </div>
+    </div>
+
+    <!-- picker overlay -->
+    <div class="picker-overlay" id="pickerOverlay">
+      <div class="picker-sheet">
+        <div class="picker-head">
+          <span id="pickerTitle">Escolher</span>
+          <button type="button" id="pickerClose">×</button>
+        </div>
+        <div class="picker-list" id="pickerList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="save-status" id="saveStatus">Salvo</div>
+  <input type="file" id="fileInput" accept=".json,application/json" style="display:none" />
+
+  <script>
+    (function () {
+      "use strict";
+
+      const STORAGE_KEY = "ficha-zumbi-2007-v9";
+
+      const ATTRS = [
+        { key: "forca", label: "Força", short: "FOR" },
+        { key: "destreza", label: "Destreza", short: "DES" },
+        { key: "constituicao", label: "Constituição", short: "CON" },
+        { key: "inteligencia", label: "Inteligência", short: "INT" },
+        { key: "sabedoria", label: "Sabedoria", short: "SAB" },
+        { key: "carisma", label: "Carisma", short: "CAR" },
+        { key: "vontade", label: "Vontade", short: "VON" }
+      ];
+
+      const SKILLS = [
+        { key: "acrobacia", label: "Acrobacia", attr: "destreza" },
+        { key: "arcanismo", label: "Arcanismo", attr: "inteligencia" },
+        { key: "atletismo", label: "Atletismo", attr: "forca" },
+        { key: "atuacao", label: "Atuação", attr: "carisma" },
+        { key: "enganacao", label: "Enganação", attr: "carisma" },
+        { key: "furtividade", label: "Furtividade", attr: "destreza" },
+        { key: "historia", label: "História", attr: "inteligencia" },
+        { key: "intimidacao", label: "Intimidação", attr: "carisma" },
+        { key: "intuicao", label: "Intuição", attr: "sabedoria" },
+        { key: "investigacao", label: "Investigação", attr: "inteligencia" },
+        { key: "lidarAnimais", label: "Lidar com Animais", attr: "sabedoria" },
+        { key: "medicina", label: "Medicina", attr: "sabedoria" },
+        { key: "natureza", label: "Natureza", attr: "inteligencia" },
+        { key: "percepcao", label: "Percepção", attr: "sabedoria" },
+        { key: "persuasao", label: "Persuasão", attr: "carisma" },
+        { key: "prestidigitacao", label: "Prestidigitação", attr: "destreza" },
+        { key: "religiao", label: "Religião", attr: "inteligencia" },
+        { key: "sobrevivencia", label: "Sobrevivência", attr: "sabedoria" },
+        { key: "persistencia", label: "Persistência", attr: "vontade" }
+      ];
+
+      let state = {
+        nome: "",
+        apelido: "",
+        classe: "",
+        nivel: 1,
+        raca: "",
+        xp: 0,
+        ca: 10,
+        iniciativa: "",
+        deslocamento: "9 m",
+        pvAtual: 10,
+        estamina: 100,
+        sanidade: 100,
+        condicao: "",
+        forca: 10, destreza: 10, constituicao: 10,
+        inteligencia: 10, sabedoria: 10, carisma: 10,
+        vontade: 10,
+        ferimentos: [],
+        anotacoes: [],
+        imagem: ""
+      };
+
+      let currentNoteIdx = -1; // -1 = na lista
+      let saveTimeout = null;
+      let statusTimeout = null;
+
+      function mod(score) {
+        const n = parseInt(score, 10);
+        if (isNaN(n)) return 0;
+        return Math.floor((n - 10) / 2);
+      }
+
+      function formatMod(m) {
+        return m >= 0 ? "+" + m : String(m);
+      }
+
+      function escapeHtmlMd(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
+
+      function renderMarkdown(src) {
+        let s = escapeHtmlMd(src || "");
+        // code blocks ```
+        s = s.replace(/```([\s\S]*?)```/g, function(_, code) {
+          return "<pre><code>" + code.trim() + "</code></pre>";
+        });
+        // inline code
+        s = s.replace(/`([^`\n]+)`/g, "<code>$1</code>");
+        // headers
+        s = s.replace(/^### (.+)$/gm, "<h3>$1</h3>");
+        s = s.replace(/^## (.+)$/gm, "<h2>$1</h2>");
+        s = s.replace(/^# (.+)$/gm, "<h1>$1</h1>");
+        // bold ** ** and __ __
+        s = s.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+        s = s.replace(/__(.+?)__/g, "<strong>$1</strong>");
+        // italic * * and _ _
+        s = s.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, "$1<em>$2</em>");
+        s = s.replace(/(^|[^_])_([^_\n]+)_(?!_)/g, "$1<em>$2</em>");
+        // blockquote
+        s = s.replace(/^&gt; (.+)$/gm, "<blockquote>$1</blockquote>");
+        // hr
+        s = s.replace(/^---$/gm, "<hr>");
+        // unordered lists
+        s = s.replace(/^(?:- |\* )(.+)(?:\n(?:- |\* ).+)*/gm, function(block) {
+          const items = block.split(/\n/).map(function(line) {
+            return "<li>" + line.replace(/^(- |\* )/, "") + "</li>";
+          }).join("");
+          return "<ul>" + items + "</ul>";
+        });
+        // ordered lists
+        s = s.replace(/^(?:\d+\. )(.+)(?:\n(?:\d+\. ).+)*/gm, function(block) {
+          const items = block.split(/\n/).map(function(line) {
+            return "<li>" + line.replace(/^\d+\. /, "") + "</li>";
+          }).join("");
+          return "<ol>" + items + "</ol>";
+        });
+        // paragraphs / line breaks
+        s = s.replace(/\n\n+/g, "</p><p>");
+        s = s.replace(/\n/g, "<br>");
+        s = "<p>" + s + "</p>";
+        // clean empty paragraphs around block elements
+        s = s.replace(/<p><(h[1-3]|ul|ol|pre|blockquote|hr)/g, "<$1");
+        s = s.replace(/<\/(h[1-3]|ul|ol|pre|blockquote)><\/p>/g, "</$1>");
+        s = s.replace(/<p><hr><\/p>/g, "<hr>");
+        s = s.replace(/<p><\/p>/g, "");
+        return s;
+      }
+
+      function updatePreview() {
+        document.getElementById("mdPreview").innerHTML = renderMarkdown(
+          document.getElementById("noteText").value
+        );
+      }
+
+      function setEditMode(edit) {
+        const ta = document.getElementById("noteText");
+        const prev = document.getElementById("mdPreview");
+        const btnE = document.getElementById("btnEditMode");
+        const btnP = document.getElementById("btnPreviewMode");
+        if (edit) {
+          ta.classList.remove("hidden");
+          prev.classList.add("hidden");
+          btnE.classList.add("active");
+          btnP.classList.remove("active");
+          ta.focus();
+        } else {
+          updatePreview();
+          ta.classList.add("hidden");
+          prev.classList.remove("hidden");
+          btnE.classList.remove("active");
+          btnP.classList.add("active");
+        }
+      }
+
+
+
+      function showSaved() {
+        const el = document.getElementById("saveStatus");
+        el.classList.add("show");
+        clearTimeout(statusTimeout);
+        statusTimeout = setTimeout(() => el.classList.remove("show"), 1400);
+      }
+
+      function persist() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          showSaved();
+        } catch (e) {
+          console.warn("Falha ao salvar", e);
+        }
+      }
+
+      function scheduleSave() {
+        clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(persist, 400);
+      }
+
+      function ensureNotes() {
+        if (!Array.isArray(state.anotacoes)) state.anotacoes = [];
+      }
+
+      function renderAttrs() {
+        const grid = document.getElementById("attrsGrid");
+        grid.innerHTML = "";
+        ATTRS.forEach(a => {
+          const box = document.createElement("div");
+          box.className = "attr-box";
+          const val = state[a.key] ?? 10;
+          const m = mod(val);
+          box.innerHTML = `
+            <div class="attr-name">${a.label}</div>
+            <input type="number" min="1" max="30" data-attr="${a.key}" value="${val}" />
+            <div class="mod ${m < 0 ? "neg" : ""}" data-mod="${a.key}">${formatMod(m)}</div>
+          `;
+          grid.appendChild(box);
+        });
+
+        grid.querySelectorAll("input[data-attr]").forEach(inp => {
+          inp.addEventListener("input", e => {
+            const key = e.target.dataset.attr;
+            let v = parseInt(e.target.value, 10);
+            if (isNaN(v)) v = 10;
+            state[key] = v;
+            const m = mod(v);
+            const modEl = grid.querySelector(`[data-mod="${key}"]`);
+            if (modEl) {
+              modEl.textContent = formatMod(m);
+              modEl.classList.toggle("neg", m < 0);
+            }
+            renderSkills();
+            scheduleSave();
+          });
+        });
+      }
+
+      function renderSkills() {
+        const grid = document.getElementById("skillsGrid");
+        grid.innerHTML = "";
+        SKILLS.forEach(s => {
+          const m = mod(state[s.attr]);
+          const short = ATTRS.find(a => a.key === s.attr)?.short || "";
+          const row = document.createElement("div");
+          row.className = "skill-row";
+          row.innerHTML = `
+            <span class="mod-val ${m < 0 ? "neg" : ""}">${formatMod(m)}</span>
+            <span class="name">${s.label}</span>
+            <span class="attr-tag">${short}</span>
+          `;
+          grid.appendChild(row);
+        });
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function renderFerimentos() {
+        const container = document.getElementById("ferimentosList");
+        container.innerHTML = "";
+        state.ferimentos.forEach((item, idx) => {
+          const row = document.createElement("div");
+          row.className = "list-item";
+          row.innerHTML = `
+            <input type="text" value="${escapeHtml(item.desc || "")}" placeholder="Descrição do ferimento..." data-idx="${idx}" />
+            <button type="button" class="remove-btn" data-idx="${idx}" title="Remover">×</button>
+          `;
+          container.appendChild(row);
+        });
+
+        container.querySelectorAll("input").forEach(el => {
+          el.addEventListener("input", e => {
+            state.ferimentos[+e.target.dataset.idx].desc = e.target.value;
+            scheduleSave();
+          });
+        });
+
+        container.querySelectorAll(".remove-btn").forEach(btn => {
+          btn.addEventListener("click", e => {
+            state.ferimentos.splice(+e.currentTarget.dataset.idx, 1);
+            renderFerimentos();
+            scheduleSave();
+          });
+        });
+      }
+
+      function renderList() {
+        ensureNotes();
+        const body = document.getElementById("listBody");
+        body.innerHTML = "";
+
+        if (state.anotacoes.length === 0) {
+          body.innerHTML = '<div style="padding:2rem 1rem;text-align:center;color:var(--text-muted);font-size:0.9rem;">Nenhuma anotação ainda.<br>Crie a primeira abaixo.</div>';
+          return;
+        }
+
+        state.anotacoes.forEach((n, idx) => {
+          const item = document.createElement("div");
+          item.className = "note-entry";
+          const title = (n.titulo || "").trim();
+          item.innerHTML = `
+            <span class="entry-title ${!title ? "empty" : ""}">${escapeHtml(title || "Sem título")}</span>
+            <span class="entry-arrow">→</span>
+            <button type="button" class="del-note" data-idx="${idx}" title="Excluir">×</button>
+          `;
+          item.addEventListener("click", e => {
+            if (e.target.classList.contains("del-note")) return;
+            openEditor(idx);
+          });
+          body.appendChild(item);
+        });
+
+        body.querySelectorAll(".del-note").forEach(btn => {
+          btn.addEventListener("click", e => {
+            e.stopPropagation();
+            const idx = +e.currentTarget.dataset.idx;
+            state.anotacoes.splice(idx, 1);
+            renderList();
+            scheduleSave();
+          });
+        });
+      }
+
+      function showList() {
+        currentNoteIdx = -1;
+        document.getElementById("viewList").classList.remove("hidden");
+        document.getElementById("viewEditor").classList.add("hidden");
+        document.getElementById("headerTitle").classList.remove("hidden");
+        document.getElementById("headerTitle").textContent = "Anotações";
+        document.getElementById("noteTitle").classList.add("hidden");
+        renderList();
+      }
+
+      function openEditor(idx) {
+        currentNoteIdx = idx;
+        const n = state.anotacoes[idx];
+        document.getElementById("viewList").classList.add("hidden");
+        document.getElementById("viewEditor").classList.remove("hidden");
+        document.getElementById("headerTitle").classList.add("hidden");
+        const titleInput = document.getElementById("noteTitle");
+        titleInput.classList.remove("hidden");
+        titleInput.value = n.titulo || "";
+        document.getElementById("noteText").value = n.texto || "";
+        setEditMode(true);
+      }
+
+      function updateHpBar() {
+        /* PV máximo removido */
+      }
+
+      function updateResourceBar(key) {
+        let v = parseInt(state[key], 10);
+        if (isNaN(v)) v = 0;
+        v = Math.max(0, Math.min(100, v));
+        state[key] = v;
+        const fill = document.getElementById(key + "Fill");
+        if (!fill) return;
+        fill.style.width = v + "%";
+        fill.classList.remove("low", "critical");
+        if (v <= 25) fill.classList.add("critical");
+        else if (v <= 50) fill.classList.add("low");
+        const inp = document.getElementById(key);
+        if (inp && String(inp.value) !== String(v)) inp.value = v;
+      }
+
+      function setupResourceDrag() {
+        document.querySelectorAll(".resource-bar").forEach(function (bar) {
+          if (bar.dataset.dragReady) return;
+          bar.dataset.dragReady = "1";
+          const key = bar.dataset.resource;
+
+          function valueFromEvent(e) {
+            const rect = bar.getBoundingClientRect();
+            const clientX = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
+            let pct = (clientX - rect.left) / rect.width;
+            pct = Math.max(0, Math.min(1, pct));
+            return Math.round(pct * 100);
+          }
+
+          function apply(e) {
+            state[key] = valueFromEvent(e);
+            updateResourceBar(key);
+            scheduleSave();
+          }
+
+          let dragging = false;
+          bar.addEventListener("pointerdown", function (e) {
+            dragging = true;
+            bar.setPointerCapture(e.pointerId);
+            apply(e);
+            e.preventDefault();
+          });
+          bar.addEventListener("pointermove", function (e) {
+            if (!dragging) return;
+            apply(e);
+          });
+          bar.addEventListener("pointerup", function () { dragging = false; });
+          bar.addEventListener("pointercancel", function () { dragging = false; });
+        });
+      }
+
+      function bindFields() {
+        document.querySelectorAll("[data-key]").forEach(el => {
+          const key = el.dataset.key;
+          if (el.tagName === "TEXTAREA" || el.tagName === "INPUT") {
+            el.value = state[key] ?? "";
+            el.addEventListener("input", () => {
+              if (el.type === "number") {
+                state[key] = el.value === "" ? "" : Number(el.value);
+              } else {
+                state[key] = el.value;
+              }
+              if (key === "pvAtual" || key === "pvMax") updateHpBar();
+              if (key === "sanidade" || key === "estamina") updateResourceBar(key);
+              scheduleSave();
+            });
+          }
+        });
+
+        document.getElementById("noteTitle").addEventListener("input", e => {
+          if (currentNoteIdx >= 0) {
+            state.anotacoes[currentNoteIdx].titulo = e.target.value;
+            scheduleSave();
+          }
+        });
+        document.getElementById("noteText").addEventListener("input", e => {
+          if (currentNoteIdx >= 0) {
+            state.anotacoes[currentNoteIdx].texto = e.target.value;
+            scheduleSave();
+          }
+        });
+      }
+
+      function openNotesPanel() {
+        showList();
+        document.getElementById("notesPanel").classList.add("open");
+        document.getElementById("btnNotes").classList.add("active");
+        document.getElementById("fabDice").classList.add("hidden");
+      }
+
+      function closeNotesPanel() {
+        document.getElementById("notesPanel").classList.remove("open");
+        document.getElementById("btnNotes").classList.remove("active");
+        document.getElementById("fabDice").classList.remove("hidden");
+        currentNoteIdx = -1;
+      }
+
+      function onBack() {
+        if (currentNoteIdx >= 0) {
+          // estava no editor → volta pra lista
+          showList();
+        } else {
+          // estava na lista → volta pra ficha
+          closeNotesPanel();
+        }
+      }
+
+      function exportJSON() {
+        const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        const nome = (state.nome || state.apelido || "sobrevivente").replace(/[^\w\s-]/g, "").trim() || "ficha";
+        a.download = `ficha-${nome}-2007.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+
+      function importJSON(file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          try {
+            const data = JSON.parse(e.target.result);
+            Object.keys(state).forEach(k => {
+              if (data[k] !== undefined) state[k] = data[k];
+            });
+            if (!Array.isArray(state.ferimentos)) state.ferimentos = [];
+            if (!Array.isArray(state.anotacoes)) state.anotacoes = [];
+            refreshUI();
+            persist();
+          } catch (err) {
+            alert("Arquivo JSON inválido.");
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      function renderPortrait() {
+        const slot = document.getElementById("portraitSlot");
+        const img = document.getElementById("portraitImg");
+        if (state.imagem) {
+          img.src = state.imagem;
+          img.style.display = "block";
+          slot.classList.add("has-img");
+        } else {
+          img.removeAttribute("src");
+          img.style.display = "none";
+          slot.classList.remove("has-img");
+        }
+      }
+
+      function refreshUI() {
+        bindFields();
+        renderAttrs();
+        renderSkills();
+        renderFerimentos();
+        renderPortrait();
+        updateHpBar();
+        updateResourceBar("estamina");
+        updateResourceBar("sanidade");
+        setupResourceDrag();
+      }
+
+      function loadFromStorage() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            const data = JSON.parse(raw);
+            Object.keys(state).forEach(k => {
+              if (data[k] !== undefined) state[k] = data[k];
+            });
+            if (!Array.isArray(state.ferimentos)) state.ferimentos = [];
+            if (!Array.isArray(state.anotacoes)) state.anotacoes = [];
+          }
+        } catch (e) {
+          console.warn("Erro ao carregar", e);
+        }
+      }
+
+      function setupEvents() {
+        document.getElementById("btnNotes").addEventListener("click", openNotesPanel);
+        document.getElementById("btnBack").addEventListener("click", onBack);
+
+        document.getElementById("btnNewNote").addEventListener("click", () => {
+          state.anotacoes.push({ titulo: "Nova anotação", texto: "" });
+          scheduleSave();
+          renderList();
+        });
+
+        document.getElementById("btnEditMode").addEventListener("click", () => setEditMode(true));
+        document.getElementById("btnPreviewMode").addEventListener("click", () => setEditMode(false));
+
+        document.getElementById("btnSave").addEventListener("click", () => persist());
+        document.getElementById("btnExport").addEventListener("click", exportJSON);
+        document.getElementById("btnImport").addEventListener("click", () => {
+          document.getElementById("fileInput").click();
+        });
+        document.getElementById("fileInput").addEventListener("change", e => {
+          const file = e.target.files[0];
+          if (file) importJSON(file);
+          e.target.value = "";
+        });
+        document.getElementById("btnPrint").addEventListener("click", () => window.print());
+        document.getElementById("btnClear").addEventListener("click", () => {
+          if (confirm("Apagar todos os dados desta ficha?")) {
+            localStorage.removeItem(STORAGE_KEY);
+            location.reload();
+          }
+        });
+
+        document.getElementById("btnAddFerimento").addEventListener("click", () => {
+          state.ferimentos.push({ desc: "" });
+          renderFerimentos();
+          scheduleSave();
+        });
+
+        // Retrato / imagem do personagem
+        const portraitSlot = document.getElementById("portraitSlot");
+        const imgInput = document.getElementById("imgInput");
+        portraitSlot.addEventListener("click", (e) => {
+          if (e.target.id === "btnRemoveImg" || e.target.closest("#btnRemoveImg")) return;
+          imgInput.click();
+        });
+        document.getElementById("btnRemoveImg").addEventListener("click", (e) => {
+          e.stopPropagation();
+          state.imagem = "";
+          renderPortrait();
+          scheduleSave();
+        });
+        imgInput.addEventListener("change", (e) => {
+          const file = e.target.files[0];
+          if (!file || !file.type.startsWith("image/")) return;
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            // Redimensiona levemente para não estourar o localStorage
+            const img = new Image();
+            img.onload = () => {
+              const max = 400;
+              let w = img.width, h = img.height;
+              if (w > max || h > max) {
+                if (w > h) { h = Math.round(h * max / w); w = max; }
+                else { w = Math.round(w * max / h); h = max; }
+              }
+              const canvas = document.createElement("canvas");
+              canvas.width = w;
+              canvas.height = h;
+              const ctx = canvas.getContext("2d");
+              ctx.drawImage(img, 0, 0, w, h);
+              state.imagem = canvas.toDataURL("image/jpeg", 0.82);
+              renderPortrait();
+              scheduleSave();
+            };
+            img.src = ev.target.result;
+          };
+          reader.readAsDataURL(file);
+          e.target.value = "";
+        });
+
+        document.addEventListener("keydown", e => {
+          if (e.key === "Escape") onBack();
+        });
+      }
+
+
+
+      // ---------- DADOS ----------
+      let diceSides = 20;
+      let diceQty = 1;
+      let diceRolling = false;
+      let diceHistory = [];
+      let useProficiency = false;
+      let selectedAttr = null;  // { key, label }  — mod é sempre recalculado ao vivo
+
+      function openDice() {
+        document.getElementById("dicePanel").classList.add("open");
+        document.getElementById("fabDice").classList.add("hidden");
+        updateDiceFormula();
+      }
+      function closeDice() {
+        document.getElementById("dicePanel").classList.remove("open");
+        document.getElementById("fabDice").classList.remove("hidden");
+        closePicker();
+      }
+
+      function getAttrMod(key) {
+        return mod(state[key] ?? 10);
+      }
+
+      // Bônus de proficiência D&D 5e pelo nível
+      function getProficiencyBonus() {
+        const lvl = parseInt(state.nivel, 10) || 1;
+        // +2 (1-4), +3 (5-8), +4 (9-12), +5 (13-16), +6 (17-20)
+        return Math.ceil(Math.min(Math.max(lvl, 1), 20) / 4) + 1;
+      }
+
+      function updateDiceFormula() {
+        let parts = [diceQty + "d" + diceSides];
+        if (useProficiency) {
+          const pb = getProficiencyBonus();
+          parts.push("Perícia (" + formatMod(pb) + ")");
+        }
+        if (selectedAttr) {
+          const m = getAttrMod(selectedAttr.key);
+          parts.push(selectedAttr.label + " (" + formatMod(m) + ")");
+        }
+        const extra = parseInt(document.getElementById("diceMod").value, 10) || 0;
+        if (extra !== 0) parts.push(formatMod(extra));
+        document.getElementById("diceFormula").textContent = parts.join(" + ").replace(/\+ -/g, "− ");
+        renderCheckTags();
+      }
+
+      function renderCheckTags() {
+        const el = document.getElementById("checkTags");
+        let html = "";
+        if (useProficiency) {
+          const pb = getProficiencyBonus();
+          html += '<span class="check-tag"><span>Perícia ' + formatMod(pb) + '</span>' +
+            '<button type="button" data-clear="skill" aria-label="Remover">×</button></span>';
+        }
+        if (selectedAttr) {
+          const m = getAttrMod(selectedAttr.key);
+          html += '<span class="check-tag"><span>' + selectedAttr.label + ' ' + formatMod(m) + '</span>' +
+            '<button type="button" data-clear="attr" aria-label="Remover">×</button></span>';
+        }
+        el.innerHTML = html;
+        el.querySelectorAll("button[data-clear]").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            if (btn.dataset.clear === "skill") useProficiency = false;
+            if (btn.dataset.clear === "attr") selectedAttr = null;
+            document.getElementById("btnPickSkill").classList.toggle("active", useProficiency);
+            document.getElementById("btnPickAttr").classList.toggle("active", !!selectedAttr);
+            updateDiceFormula();
+          });
+        });
+        document.getElementById("btnPickSkill").classList.toggle("active", useProficiency);
+        document.getElementById("btnPickAttr").classList.toggle("active", !!selectedAttr);
+      }
+
+      function openPicker(mode) {
+        const list = document.getElementById("pickerList");
+        const title = document.getElementById("pickerTitle");
+        list.innerHTML = "";
+        // só atributos usam o picker agora
+        title.textContent = "Atributo";
+        ATTRS.forEach(function (a) {
+          const m = getAttrMod(a.key);
+          const item = document.createElement("div");
+          item.className = "picker-item";
+          item.innerHTML = "<span>" + a.label + "</span><span class=\"pmod\">" + formatMod(m) + "</span>";
+          item.addEventListener("click", function () {
+            selectedAttr = { key: a.key, label: a.label };
+            closePicker();
+            updateDiceFormula();
+          });
+          list.appendChild(item);
+        });
+        document.getElementById("pickerOverlay").classList.add("open");
+      }
+
+      function closePicker() {
+        document.getElementById("pickerOverlay").classList.remove("open");
+      }
+
+      function rollOne(sides) {
+        return 1 + Math.floor(Math.random() * sides);
+      }
+
+      function doRoll() {
+        if (diceRolling) return;
+        diceRolling = true;
+        const btn = document.getElementById("btnRoll");
+        btn.disabled = true;
+
+        const extra = parseInt(document.getElementById("diceMod").value, 10) || 0;
+        const skillMod = useProficiency ? getProficiencyBonus() : 0;
+        const attrMod = selectedAttr ? getAttrMod(selectedAttr.key) : 0;
+        const bonus = skillMod + attrMod + extra;
+
+        const cube = document.getElementById("dice3d");
+        const face = document.getElementById("diceFace");
+        face.classList.remove("crit", "fumble");
+        face.textContent = "…";
+        cube.classList.remove("rolling");
+        void cube.offsetWidth;
+        cube.classList.add("rolling");
+
+        setTimeout(function () {
+          const rolls = [];
+          for (let i = 0; i < diceQty; i++) rolls.push(rollOne(diceSides));
+          const sum = rolls.reduce(function (a, b) { return a + b; }, 0);
+          const total = sum + bonus;
+
+          face.textContent = String(total);
+          if (diceSides === 20 && diceQty === 1) {
+            if (rolls[0] === 20) face.classList.add("crit");
+            if (rolls[0] === 1) face.classList.add("fumble");
+          }
+
+          // Rótulo completo: 1d20 + Perícia + Força (+ extra se houver)
+          let label = diceQty + "d" + diceSides;
+          if (useProficiency) label += " + Perícia";
+          if (selectedAttr) label += " + " + selectedAttr.label;
+          if (extra !== 0) label += (extra > 0 ? " +" : " ") + extra;
+
+          // Detalhe legível com cada modificador separado
+          let detailParts = [];
+          if (diceQty === 1) {
+            detailParts.push(String(rolls[0]));
+          } else {
+            detailParts.push("(" + rolls.join(" + ") + " = " + sum + ")");
+          }
+          if (useProficiency) detailParts.push(formatMod(skillMod) + " Perícia");
+          if (selectedAttr) detailParts.push(formatMod(attrMod) + " " + selectedAttr.label);
+          if (extra !== 0) detailParts.push(formatMod(extra) + " extra");
+
+          let detail = "";
+          if (detailParts.length > 1 || diceQty > 1) {
+            detail = detailParts.join("  ").replace(/\+ -/g, "−") + "  =  " + total;
+          }
+
+          document.getElementById("diceLabel").textContent = label;
+          document.getElementById("diceTotal").textContent = detail;
+
+          diceHistory.unshift({ label: label, detail: detail, total: total });
+          if (diceHistory.length > 12) diceHistory.pop();
+          renderDiceHist();
+
+          cube.classList.remove("rolling");
+          diceRolling = false;
+          btn.disabled = false;
+        }, 900);
+      }
+
+      function renderDiceHist() {
+        const el = document.getElementById("diceHist");
+        el.innerHTML = diceHistory.map(function (h) {
+          return '<div class="hist-item">' + h.label +
+            ' → <span class="hist-total">' + h.total + '</span></div>';
+        }).join("");
+      }
+
+      function setupDice() {
+        document.getElementById("fabDice").addEventListener("click", openDice);
+        document.getElementById("btnBackDice").addEventListener("click", closeDice);
+        document.getElementById("btnRoll").addEventListener("click", doRoll);
+        document.getElementById("btnPickSkill").addEventListener("click", function () {
+          useProficiency = !useProficiency;
+          updateDiceFormula();
+        });
+        document.getElementById("btnPickAttr").addEventListener("click", function () { openPicker("attr"); });
+        document.getElementById("pickerClose").addEventListener("click", closePicker);
+        document.getElementById("pickerOverlay").addEventListener("click", function (e) {
+          if (e.target.id === "pickerOverlay") closePicker();
+        });
+        document.getElementById("diceMod").addEventListener("input", updateDiceFormula);
+
+        document.querySelectorAll(".dice-type-btn").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            document.querySelectorAll(".dice-type-btn").forEach(function (b) {
+              b.classList.remove("selected");
+            });
+            btn.classList.add("selected");
+            diceSides = parseInt(btn.dataset.sides, 10);
+            updateDiceFormula();
+          });
+        });
+
+        document.getElementById("qtyMinus").addEventListener("click", function () {
+          if (diceQty > 1) {
+            diceQty--;
+            document.getElementById("qtyVal").textContent = diceQty;
+            updateDiceFormula();
+          }
+        });
+        document.getElementById("qtyPlus").addEventListener("click", function () {
+          if (diceQty < 20) {
+            diceQty++;
+            document.getElementById("qtyVal").textContent = diceQty;
+            updateDiceFormula();
+          }
+        });
+      }
+
+
+
+      loadFromStorage();
+      refreshUI();
+      setupEvents();
+      setupDice();
+    })();
+  </script>
+</body>
+</html>
